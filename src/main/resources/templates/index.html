@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Absence Records</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+<h1>Absence Records</h1>
+
+<div id="records">
+</div>
+
+<div id="form">
+</div>
+
+<script>
+    $(document).ready(function () {
+        loadRecords();
+    });
+
+    // Функция для загрузки списка записей
+    function loadRecords() {
+        $.get("/get-absence-records", function (data) {
+            $("#records").html(data);
+        });
+    }
+
+    // Функция для открытия формы добавления/изменения записи
+    function openForm(recordId) {
+        $.get("/get-absence-form", { id: recordId }, function (data) {
+            $("#form").html(data);
+        });
+    }
+
+    // Функция для отправки данных формы через AJAX
+    function saveRecord() {
+        var formData = $("#absenceForm").serialize();
+        $.post("/save-absence-record", formData, function () {
+            loadRecords();
+            $("#form").empty(); // Закрытие формы после сохранения
+        });
+    }
+
+    // Функция для удаления записи
+    function deleteRecord(recordId) {
+        $.post("/delete-absence-record", { id: recordId }, function () {
+            loadRecords();
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+<form id="absenceForm" onsubmit="updateRecord(); return false;">
+    <input type="hidden" name="id" th:value="${record.id}" />
+    Reason:
+    <select name="reason" th:field="${record.reason}">
+        <option th:each="reason : ${reasons}"
+                th:value="${reason.id}"
+                th:text="${reason.reasonText}">
+        </option>
+    </select>
+    <br />
+    Start Date: <input type="date" name="startDate" th:value="${#dates.format(record.startDate, 'yyyy-MM-dd')}" /><br />
+    Duration: <input type="text" name="duration" th:value="${record.duration}" /><br />
+    Discounted: <input type="checkbox" name="discounted" th:checked="${record.discounted}" /><br />
+    Description: <textarea name="description" th:text="${record.description}"></textarea><br />
+    <button th:onclick="'updateRecord(\'' + ${record.id} + '\')'">Edit</button>
+    <button type="button" onclick="clearForm();">Cancel</button>
+</form>
+</body>
+</html>

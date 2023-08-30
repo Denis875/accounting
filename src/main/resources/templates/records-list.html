@@ -1,0 +1,24 @@
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Reason</th>
+        <th>Start Date</th>
+        <th>Duration</th>
+        <th>Discounted</th>
+        <th>Description</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="record : ${records}">
+        <td th:text="${record.id}"></td>
+        <td th:text="${record.reason.reasonText}"></td>
+        <td th:text="${record.startDate}"></td>
+        <td th:text="${record.duration}"></td>
+        <td th:text="${record.discounted}"></td>
+        <td th:text="${record.description}"></td>
+        <td>
+            <button th:attr="onclick='openForm(\'' + ${record.id} + '\')'">Edit</button>
+            <button th:attr="onclick='deleteRecord(' + ${record.id} + ')'">Delete</button>
+        </td>
+    </tr>
+</table>
+<button onclick="openForm()">Add New</button>
